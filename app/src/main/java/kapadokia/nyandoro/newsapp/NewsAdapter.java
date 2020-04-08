@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,11 +25,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         TextView tv_title,tv_context,tv_date;
         ImageView user_imv;
+        RelativeLayout item_container;
 
 
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            item_container = itemView.findViewById(R.id.item_container);
             tv_title = itemView.findViewById(R.id.title_text);
             tv_context = itemView.findViewById(R.id.text_description);
             tv_date = itemView.findViewById(R.id.date_text);
@@ -53,6 +57,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
+
+        //we apply animation views here
+        //first we creare animation for user photo
+        holder.user_imv.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_transition_animation));
+
+        //animation for the whole card
+        holder.item_container.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
 
         holder.tv_title.setText(mData.get(position).getTitle());
         holder.tv_context.setText(mData.get(position).getContext());
